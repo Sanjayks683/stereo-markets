@@ -342,7 +342,6 @@ footer { border-top: 1px solid var(--line); padding-block: 36px 48px; }
       <a href="#lenses">Two lenses</a>
       <a href="#how">How it works</a>
       <a href="#portfolio">Portfolio</a>
-      <a href="#engineering">Engineering</a>
     </nav>
     <a class="btn btn-solid" href="#access">Request access</a>
   </div>
@@ -382,12 +381,12 @@ footer { border-top: 1px solid var(--line); padding-block: 36px 48px; }
         <div class="channel ch-trader">
           <div class="channel-label"><span class="bar"></span> Trader lens</div>
           <h3>Is this a trade today?</h3>
-          <p class="note">Momentum, trend, volatility and volume, plus candlestick and chart patterns.</p>
+          <p class="note">For NSE and BSE listings: last month&rsquo;s move and 12-month momentum, the two factors that held up on Indian large caps.</p>
           <div class="readout">
-            <div class="row"><span>RSI (14)</span><span>58.2</span></div>
-            <div class="row"><span>MACD</span><span>+1.24</span></div>
-            <div class="row"><span>ATR (14)</span><span>31.40</span></div>
-            <div class="row"><span>Entry / Target / Stop</span><span>1,402 / 1,528 / 1,344</span></div>
+            <div class="row"><span>21-day move</span><span>&minus;6.8%</span></div>
+            <div class="row"><span>12-1 momentum</span><span>+4.1%</span></div>
+            <div class="row"><span>Suggested hold</span><span>2&ndash;4 weeks</span></div>
+            <div class="row"><span>Entry / Target / Stop</span><span>1,172 / 1,248 / 1,128</span></div>
           </div>
           <div class="verdict"><span class="chip chip-buy">BUY</span><span>confidence 72</span></div>
         </div>
@@ -396,10 +395,10 @@ footer { border-top: 1px solid var(--line); padding-block: 36px 48px; }
           <h3>Is this a position for years?</h3>
           <p class="note">DCF, dividend discount, Graham and relative valuation, with moat and quality scoring.</p>
           <div class="readout">
-            <div class="row"><span>DCF fair value</span><span>1,610</span></div>
-            <div class="row"><span>Graham number</span><span>1,180</span></div>
-            <div class="row"><span>Moat / quality</span><span>68 / 74</span></div>
-            <div class="row"><span>Margin of safety</span><span>12.9%</span></div>
+            <div class="row"><span>Blended fair value</span><span>1,310</span></div>
+            <div class="row"><span>Graham number</span><span>980</span></div>
+            <div class="row"><span>Moat / quality</span><span>Narrow / 74</span></div>
+            <div class="row"><span>Margin of safety</span><span>11.7%</span></div>
           </div>
           <div class="verdict"><span class="chip chip-hold">HOLD</span><span>confidence 61</span></div>
         </div>
@@ -426,8 +425,9 @@ footer { border-top: 1px solid var(--line); padding-block: 36px 48px; }
           </div>
           <h3>Technical</h3>
           <p>
-            Indicators are computed over daily bars and combined by a scorer, not read off a single
-            crossover. Candlestick and chart patterns are detected and weighted alongside them.
+            For US listings, indicators are pooled into factor families and blended by a scorer,
+            with candlestick and chart patterns weighted alongside them. Indian listings use their
+            own model, because the US one showed no edge on NIFTY 50 stocks.
           </p>
           <div class="taglist">
             <span class="tag">RSI</span><span class="tag">MACD</span>
@@ -451,9 +451,8 @@ footer { border-top: 1px solid var(--line); padding-block: 36px 48px; }
           <div class="taglist">
             <span class="tag">Discounted cash flow</span><span class="tag">Dividend discount</span>
             <span class="tag">Graham number</span><span class="tag">Relative valuation</span>
-            <span class="tag">Earnings projection</span><span class="tag">Moat scoring</span>
+            <span class="tag">Bear / base / bull scenarios</span><span class="tag">Moat rating</span>
             <span class="tag">Quality &amp; safety</span><span class="tag">Health scores</span>
-            <span class="tag">Factor exposure</span>
           </div>
         </div>
       </div>
@@ -477,15 +476,15 @@ footer { border-top: 1px solid var(--line); padding-block: 36px 48px; }
           <h3>Two years of daily bars</h3>
           <p>
             The engine is fed a full analysis window whatever range the chart is showing, because
-            momentum and volatility regimes need the history to be calibrated at all.
+            12-month momentum and volatility regimes need that history to be measured at all.
           </p>
         </div>
         <div class="step">
           <div class="step-n">02 — Scoring</div>
           <h3>Factors, then a score</h3>
           <p>
-            Indicators, patterns and valuation models each contribute to a scorer. The output is a
-            recommendation with a confidence number you can argue with.
+            Measured market factors, or valuation models on the investor side, feed a scorer. The
+            output is a recommendation with a confidence number you can argue with.
           </p>
         </div>
         <div class="step">
@@ -510,8 +509,9 @@ footer { border-top: 1px solid var(--line); padding-block: 36px 48px; }
           outcome alone.</p>
         </div>
         <div class="metric">
-          <div class="big">2y</div>
-          <p>Daily bars behind every technical read, the window the factors were calibrated on.</p>
+          <div class="big">10y</div>
+          <p>Of daily bars in the walk-forward tests behind each technical model, scored only on
+          stocks and dates the design never saw.</p>
         </div>
       </div>
     </div>
@@ -562,41 +562,6 @@ footer { border-top: 1px solid var(--line); padding-block: 36px 48px; }
     </div>
   </section>
 
-  <section id="engineering">
-    <div class="wrap">
-      <div class="section-head">
-        <div class="kicker">Engineering</div>
-        <h2>The request path is the product.</h2>
-        <p>
-          A market page that polls is only as good as its slowest fetch, so the data layer is built
-          around the cost of each upstream call.
-        </p>
-      </div>
-
-      <div class="feature-grid">
-        <div class="feature">
-          <h3>Batched quotes</h3>
-          <p>A 40-symbol dashboard costs one upstream call, not forty. Sparklines add a second
-          multi-symbol call.</p>
-        </div>
-        <div class="feature">
-          <h3>Per-symbol caching</h3>
-          <p>Pages that share symbols fetch only what is genuinely missing, so moving between them
-          is close to free.</p>
-        </div>
-        <div class="feature">
-          <h3>Stale-while-revalidate</h3>
-          <p>An expiring quote is served immediately and refreshed behind the response, so a poll
-          never blocks on the upstream.</p>
-        </div>
-        <div class="feature">
-          <h3>Market-aware cadence</h3>
-          <p>Seconds while an exchange is open, minutes once every venue has closed. The client
-          polls to match.</p>
-        </div>
-      </div>
-    </div>
-  </section>
 
   <section id="access">
     <div class="wrap access">
